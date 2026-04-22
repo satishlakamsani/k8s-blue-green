@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-green
+  #thse labels are replicaset labels
+  labels:
+   project: roboshop
+   tier: frontend 
+   component: frontend
+   version: green
+  annotations:
+   kubernetes.io/change-cause: "moving to 1.29.7"
+
+spec: 
+  replicas: 4
+  selector:
+    matchLabels: 
+      project: roboshop
+      tier: frontend
+      component: frontend
+      version: green
+     # This is pod definition, pod is subset of replicaset
+  template: 
+    metadata: 
+      labels: 
+        project: roboshop
+        tier: frontend
+        component: frontend
+        version: green
+    
+    spec: 
+      containers: 
+      - name: nginx-green
+        image: satishlakamsani/blue-green:0.0.2
+
+
+
